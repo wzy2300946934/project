@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+
+    <script>
+        // 1 创建xhr对象
+        let xhr = new XMLHttpRequest();
+        console.log("1");
+
+        // 2  设置请求参数
+        /**
+         * 三个参数
+         * method  请求方式   get post  put delete 等请求方式
+         * url     请求的 url地址
+         * async   是否是异步  默认是异步
+         */
+        // xhr.open("get", "http://127.0.0.1:8080/list?page=1&size=10", false);
+        xhr.open("post", "http://127.0.0.1:8080/cate/list");
+        console.log(2)
+        /**
+         * 3.发送请求
+         * body  post  put请求 传递参数   常见是string 类型
+         */
+        let body = "page=1&size=10";
+
+        xhr.send(body);
+        console.log(3)
+        /**
+         * 设置监听
+         */
+        xhr.onreadystatechange = function () {
+            // 请求已经完成,并且服务器响应了数据
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                console.log(4)
+                // json数据
+                alert(xhr.responseText);
+                let result = JSON.parse(xhr.responseText);
+            }
+        };
+    </script>
+</head>
+<body>
+<a href="login.html">login.html</a>
+</body>
+</html>
