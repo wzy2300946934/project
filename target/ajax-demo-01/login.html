@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登陆</title>
+
+    <link href="https://cdn.bootcss.com/normalize/7.0.0/normalize.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
+    <script src="https://cdn.bootcss.com/twitter-bootstrap/3.4.1/js/bootstrap.js"></script>
+    <!--3.验证规则样式-->
+    <link href="https://cdn.bootcss.com/jquery.bootstrapvalidator/0.5.3/css/bootstrapValidator.css" rel="stylesheet">
+    <!--4.核心验证文件-->
+    <script src="https://cdn.bootcss.com/jquery.bootstrapvalidator/0.5.3/js/bootstrapValidator.js"></script>
+    <!--5.中文校验-->
+    <script src="https://cdn.bootcss.com/jquery.bootstrapvalidator/0.5.3/js/language/zh_CN.js"></script>
+
+    <script>
+        $(function () {
+            /**
+             *  登陆按钮  数据校验
+             *
+             *bootstrapValidator  验证的核心方法
+             *
+             * options  对象类型
+             */
+
+            $("#loginForm").bootstrapValidator(
+                {
+                    message: "数据格式不正确，请稍后在提交",
+                    feedbackIcons: {
+                        //  验证通过的样式
+                        valid: 'glyphicon glyphicon-ok-circle',
+                        //  验证结束的样式
+                        invalid: 'glyphicon glyphicon-remove-circle',
+                        //  验证中的样式
+                        validating: 'glyphicon glyphicon-hand-right',
+                    },
+
+                    /**
+                     *  提示语
+                     *  提示样式
+                     */
+
+                    fields: {
+                        username: {
+                            //  用户输入错误账号的提示
+                            message: '账号必须是字母开头，长度不得小于18位',
+                            validators: {
+                                notEmpty: {
+                                    message: '账号不能为空',
+                                },
+                                regexp: {
+                                    // regexp: "^[a-zA-Z][a-zA-Z0-9]{7,16}$",
+                                    regexp: "^[a-zA-Z][a-zA-Z0-9]{7,16}",
+                                }
+                            }
+                        },
+                        password:{
+                            message: '密码格式不正确',
+                            validators: {
+                                notEmpty: {
+                                    message: '密码不能为空',
+                                },
+                                stringLength:{
+                                    max:18,
+                                    min:8,
+                                    message:'密码长度最少为8，最长不能超过18',
+                                }
+                            }
+                        }
+                    }
+                })
+        })
+
+    </script>
+
+    <script>
+        $(function () {
+            let xhr = new XMLHttpRequest();
+            xhr = open("http://127.0.0.1:8080/user/login")
+            // xhr.send();
+
+            // xhr.onreadystatechange = function () {
+            //     if (xhr.readyState === 4 && xhr.status===200){
+            //         let jsontext = xhr.responseText;
+            //         let result  =JSON.parse(jsontext);
+            //         if (result.status ===200){
+            //             window.location.href = "/login.html"
+            //         }
+            //     }
+            // }
+        })
+    </script>
+
+
+</head>
+<body>
+<style type="text/css">
+    body {
+        background-size: 100% 100%;
+    }
+
+    .form-group {
+        margin: 40px auto;
+    }
+
+    #login_box {
+        margin-top: 30px;
+        padding: 20px;
+        border-radius: 15px;
+        background: #ffffff;
+        color: #b2b2b2;
+    }
+</style>
+<div class="container-fluid">
+    <!--
+            1.使用表单时，需要使用form-group来控制每一个组件
+            2.control-label  使label标签和文本对齐
+            3.让div居中
+            4.添加背景图片
+    -->
+    <div class="row">
+        <header class="page-header text-center">
+            <h1>用户登陆</h1>
+        </header>
+        <div class="col-lg-6 col-lg-offset-3" id='login_box'>
+            <form class="form-horizontal" id="loginForm">
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">账号</label>
+                    <div class="col-lg-7">
+                        <input type="text" name="username" class="form-control" placeholder="输入账号">
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+                    <label  class="col-lg-3 control-label">密码</label>
+                    <div class="col-lg-7">
+                        <input type="password " name="password" class="form-control" placeholder="输入密码">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-lg-offset-3 col-lg-3">
+                        <button id="loginBtn" type="button" class="btn-default form-control">登陆</button>
+                    </div>
+
+                    <div class="col-lg-offset-1 col-lg-3">
+                        <button type="submit" class="btn-default form-control">注册</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>>
+</body>
+</html>

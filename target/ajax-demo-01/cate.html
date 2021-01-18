@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>商品分页信息</title>
+</head>
+<body>
+<table id="cate" border="0" cellpadding="1">
+    <tr>
+        <th>序号</th>
+        <th>名称</th>
+        <th>编码</th>
+        <th>规格</th>
+        <th>状态</th>
+    </tr>
+
+    <tr>
+        <td></td>
+    </tr>
+
+    <script>
+        var xhr = new XMLHttpRequest();
+        xhr.open("get", "http://127.0.0.1:8080/cate/list?page=1&size=10");
+        xhr.send();
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                //获取服务器传递的json数据
+                let jsonText = xhr.responseText;
+                let result = JSON.parse(jsonText);
+                if (result.status === 200) {
+                    // dom操作
+                    showCate(result.data);
+                }
+            }
+        }
+        function showCate(cates) {
+            // 获取表格的根元素
+            var tableEle = document.getElementById("cate");
+            for (let i = 0; i < cates.length; i++) {
+                let cate = cates[i];
+                //创建tr
+                let trEle = document.createElement("tr");
+
+                // 创建5个td
+                let idEle = document.createElement("td");
+                idEle.innerText = cate.cateId;
+
+                let nameEle = document.createElement("td");
+                nameEle.innerText = cate.name;
+
+                let codeEle = document.createElement("td");
+                codeEle.innerText = cate.code;
+
+                let versionEle = document.createElement("td");
+                versionEle.innerText = cate.version;
+
+                let statusEle = document.createElement("td");
+                statusEle.innerText = cate.isDel === 0 ? "启用" : "禁用"
+
+                trEle.appendChild(idEle);
+                trEle.appendChild(nameEle);
+                trEle.appendChild(codeEle);
+                trEle.appendChild(versionEle);
+                trEle.appendChild(statusEle);
+                tableEle.appendChild(trEle);
+            }
+        }
+    </script>
+</table>
+</body>
+</html>
